@@ -1,9 +1,4 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-numbers = [
+input = [
     1786,
     571,
     1689,
@@ -208,8 +203,9 @@ numbers = [
 
 
 def two():
-    for a in numbers:
-        for b in numbers:
+    """Find two numbers from the input list that sum to 2020, and calculate the product"""
+    for a in input:
+        for b in input:
             if a == b:
                 continue
             if a + b == 2020:
@@ -219,16 +215,16 @@ def two():
 
 
 def three():
-    for a in numbers:
-        for b in numbers:
-            for c in numbers:
+    """Find three numbers from the input list that sum to 2020, and calculate the product"""
+    for a in input:
+        for b in input:
+            for c in input:
                 if a == b or b == c or a == c:
                     continue
                 if a + b + c == 2020:
                     print(f"Found three numbers: {a}, {b}, {c}")
                     print(f"Sum: {a*b*c}")
                     return
-
 
 
 if __name__ == '__main__':
