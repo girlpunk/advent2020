@@ -14,10 +14,8 @@ def first(across=3, down=1):
         if file[current_down][current_across] == Tree:
             trees += 1
 
-        current_across += across
+        current_across = (current_across + across) % len(file[0])
         current_down += down
-
-        current_across %= len(file[0])
 
     return trees
 
