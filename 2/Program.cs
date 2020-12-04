@@ -14,39 +14,53 @@ namespace _2
             Console.WriteLine($"Second task: {await Second()}");
         }
 
-        private static async Task<int> First()
-        {
-            var file = await File.ReadAllLinesAsync("input.txt");
+        private static async Task<int> First() =>
+            (await File.ReadAllLinesAsync("input.txt"))
+            .AsParallel()
+            .Select(line => line.Split('-', ' ', ':'))
+            .Select(inp => new UL(int.Parse(inp[0]), int.Parse(inp[1]), inp[2][0], inp[4]))
+            .Select(ul => new PL(ul, ul.Password.Count(c => c == ul.Character)))
+            .Count(pl => pl.Min <= pl.Count && pl.Count <= pl.Max);
 
-            return file.AsParallel()
-                .Select(line => 
-                { 
-                    var (min, max, character, _, password) = line.Split(new[] {'-', ' ', ':'}); 
-                    return (min, max, character: character[0], password);
-                })
-                .Select(inp => (min: int.Parse(inp.min), max: int.Parse(inp.max), inp.character, inp.password))
-                .Count(inp =>
-                {
-                    var count = inp.password.Count(c => c == inp.character);
-                    return (inp.min <= count) && (count <= inp.max);
-                });
+        private static async Task<int> Second() =>
+            (await File.ReadAllLinesAsync("input.txt")).AsParallel()
+            .Select(line => line.Split(new[] {'-', ' ', ':'}))
+            .Select(inp => new UL(int.Parse(inp[0]), int.Parse(inp[1]), inp[2][0], inp[4]))
+            .Count(inp => (inp.Password[inp.Min - 1] == inp.Character) != (inp.Password[inp.Max - 1] == inp.Character));
+    }
+
+    public class UL {
+        public UL(int min, int max, char character, string password)
+        {
+            this.Min = min;
+            Max = max;
+            Character = character;
+            Password = password;
         }
 
-        private static async Task<int> Second()
-        {
-            var file = await File.ReadAllLinesAsync("input.txt");
+        public int Min { get; set; }
+        public int Max { get; set; }
+        public char Character { get; set; }
+        public string Password { get; set; }
+    }
 
-            return file.AsParallel()
-                .Select(line =>
-                {
-                    var (p1, p2, character, _, password) = line.Split(new[] {'-', ' ', ':'});
-                    return (p1, p2, character: character[0], password);
-                })
-                .Select(inp => (p1: int.Parse(inp.p1), p2: int.Parse(inp.p2), inp.character, inp.password))
-                .Count(inp =>
-                    (inp.password[inp.p1 - 1] == inp.character && inp.password[inp.p2 - 1] != inp.character) ||
-                    (inp.password[inp.p1 - 1] != inp.character && inp.password[inp.p2 - 1] == inp.character));
+    public class PL
+    {
+        public PL(UL ul, int count)
+        {
+            Min = ul.Min;
+            Max = ul.Max;
+            Character = ul.Character;
+            Password = ul.Password;
+
+            Count = count;
         }
+
+        public int Min { get; set; }
+        public int Max { get; set; }
+        public char Character { get; set; }
+        public string Password { get; set; }
+        public int Count { get; set; }
     }
 
     public static class Extensions
