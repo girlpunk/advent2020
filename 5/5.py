@@ -1,8 +1,8 @@
 def load_seats():
-    seat_codes = open("input.txt")
+    seat_codes = [line.strip() for line in open("input.txt")]
 
     for seat in seat_codes:
-        yield int(seat.replace("F", "0").replace("B", "1").replace("L", "0").replace("R", "1"), 2)
+        yield int("".join(["1" if char in ["B", "R"] else "0" for char in seat]), 2)
 
 
 def first(seats):
