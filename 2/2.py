@@ -1,10 +1,10 @@
 from typing import Callable
 
-def decode_lines(callback: Callable[[str, str, int, int], bool]) -> int:
-    input = open("input.txt")
+def decode_lines(file, callback: Callable[[str, str, int, int], bool]) -> int:
+    input = open(file)
     output = 0
 
-    for line in input.split("\n"):
+    for line in input:
         line = line.strip()
 
         if line == "":
@@ -22,30 +22,43 @@ def decode_lines(callback: Callable[[str, str, int, int], bool]) -> int:
     return output
 
 
-def first():
+def first(file):
     """
     Password contains between min and max (inclusive) instances of character
     """
-    valid_passwords = decode_lines(
+    return decode_lines(
+        file,
         lambda password, character, min_count, max_count:
             min_count <= password.strip().count(character.strip()) <= max_count)
 
-    print(f"Found {valid_passwords} total valid passwords")
 
-
-def second():
+def second(file):
     """
     min and max represent 1-indexed positions that must be match the character
     """
-    valid_passwords = decode_lines(
+    return decode_lines(
+        file,
         lambda password, character, min_count, max_count:
             (password[min_count - 1] == character and password[max_count - 1] != character)
             or
             (password[min_count - 1] != character and password[max_count - 1] == character)
     )
-    print(f"Found {valid_passwords} total valid passwords")
+
+
+def main(file="input.txt"):
+    return first(file), second(file)
+
+
+def test_jm_2(benchmark):
+    one, two = benchmark(main, file="2/input.txt")
+    assert one == 422
+    assert two == 451
 
 
 if __name__ == '__main__':
-    first()
-    second()
+    one = first("input.txt")
+    two = second("input.txt")
+    assert one == 422
+    assert two == 451
+    print(one)
+    print(two)

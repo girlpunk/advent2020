@@ -1,31 +1,20 @@
 import re
 
 
-def first():
-    # for passport in passports:
-    #     parts = [part.split(":") for part in passport.split()]
-    #     count += any(part[0] == "byr" for part in parts) & \
-    #              any(part[0] == "iyr" for part in parts) & \
-    #              any(part[0] == "eyr" for part in parts) & \
-    #              any(part[0] == "hgt" for part in parts) & \
-    #              any(part[0] == "hcl" for part in parts) & \
-    #              any(part[0] == "ecl" for part in parts) & \
-    #              any(part[0] == "pid" for part in parts)
-
+def first(file):
     return len([
         part for part in [
             {k: v for k, v in [
                 part.split(":") for part in passport.split()]
              } for passport in [
-                line.strip() for line in open("input.txt").read().split("\n\n")
+                line.strip() for line in open(file).read().split("\n\n")
             ]
         ] if ("byr" in part) & ("iyr" in part) & ("eyr" in part) & ("hgt" in part) & ("hcl" in part) & ("ecl" in part) & ("pid" in part)])
 
 
-def second():
-    all_passports = [line.strip() for line in open("input.txt").read().split("\n\n")]
+def second(file):
+    all_passports = [line.strip() for line in open(file).read().split("\n\n")]
 
-    count = 0
     passports_with_parts = []
 
     for passport in all_passports:
@@ -49,7 +38,18 @@ def second():
 
     return valid_passports
 
+def main(file="input.txt"):
+    return first(file), second(file)
+
+def test_jm_4(benchmark):
+    one, two = benchmark(main, file="4/input.txt")
+    assert one == 202
+    assert two == 137
 
 if __name__ == '__main__':
-    first()
-    second()
+    one, two = main()
+    assert one == 202
+    assert two == 137
+    print(one)
+    print(two)
+
