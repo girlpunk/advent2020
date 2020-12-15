@@ -49,7 +49,8 @@ conf = {
         ],
         "tests": [
             ["Jacob", "4.4"],
-            ["Vess", "Vess.advent4"]
+            ["Vess", "Vess.advent4"],
+            ["CatAndDogSoup", "soup.2020_12_04_all"]
         ]
     },
     "5": {
@@ -67,24 +68,42 @@ conf = {
     "6": {
         "files": [
             ["6/input.txt", 6273, 3254],
-            ["Vess/input6.txt", 6590, 3288]
+            ["Vess/input6.txt", 6590, 3288],
+            ["okami/day_6/input.txt", 6625, 3360]
         ],
         "tests": [
             ["Jacob", "6.6"],
-            ["Vess", "Vess.advent6"]
+            ["Vess", "Vess.advent6"],
+            ["Okami", "okami.day_6.main"],
         ]
     },
     "7": {
-        "files": [],
-        "tests": []
+        "files": [
+            ["7/input.txt", 248, 57281],
+            ["Vess/input7.txt", 211, 12414],
+            ["okami/day_7/input.txt", 222, 13264]
+        ],
+        "tests": [
+            ["Jacob", "7.7"],
+            ["Vess", "Vess.advent7"],
+            ["Okami", "okami.day_7.main"],
+        ]
     },
     "8": {
-        "files": [],
-        "tests": []
+        "files": [
+            ["8/input.txt", 1766, 1639]
+        ],
+        "tests": [
+            ["Jacob", "8.8"]
+        ]
     },
     "9": {
-        "files": [],
-        "tests": []
+        "files": [
+            ["9/input.txt", 530627549, 77730285]
+        ],
+        "tests": [
+            ["Jacob", "9.9"]
+        ]
     },
     "10": {
         "files": [],
